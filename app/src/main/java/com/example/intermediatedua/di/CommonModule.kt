@@ -1,5 +1,7 @@
 package com.example.intermediatedua.di
 
+import android.content.SharedPreferences
+import com.example.intermediatedua.data.local.UserPreferences
 import com.example.intermediatedua.data.login.LoginRepository
 import com.example.intermediatedua.data.login.LoginService
 import com.example.intermediatedua.data.register.RegisterRepository
@@ -32,4 +34,12 @@ object ViewModelModule{
     @Provides
     @Singleton
     fun provideLoginViewModel(loginRepository: LoginRepository) = LoginViewModel(loginRepository)
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object SharedPreferencesModule{
+    @Provides
+    @Singleton
+    fun provideUserPreferences(sharedPreferences: SharedPreferences) = UserPreferences(sharedPreferences)
 }

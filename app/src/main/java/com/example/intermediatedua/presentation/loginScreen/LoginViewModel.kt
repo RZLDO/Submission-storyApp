@@ -19,9 +19,10 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
     private val _loginResult = MutableLiveData<LoginResponse>()
     val loginResult : LiveData<LoginResponse>
         get() = _loginResult
-    suspend fun login(email : String , password : String){
+
+    suspend fun login(email:String, password:String){
         viewModelScope.launch {
-            val response = loginRepository.login(email, password)
+            val response = loginRepository.login(email,password)
             _loginResult.value = response
         }
         viewModelScope.launch {

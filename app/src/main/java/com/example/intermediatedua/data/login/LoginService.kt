@@ -9,6 +9,6 @@ interface LoginService {
     @POST("login")
     suspend fun login(
         @Field("email")email:String,
-        @Field("password")password : String,
+        @Field("password")password:String,
     ): LoginResponse
 }
