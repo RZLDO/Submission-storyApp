@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="24dp"
+    tools:context=".presentation.registerScreen.RegisterFragment">
+    <ProgressBar
+        android:id="@+id/pb_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
+
+        />
+    <ImageView
+        android:id="@+id/iv_registerImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/signup"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/register_image" />
+
+    <com.example.intermediatedua.utils.CustomEditText
+        android:id="@+id/ed_name_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/name"
+        app:layout_constraintTop_toBottomOf="@+id/iv_registerImage"
+        />
+    <com.example.intermediatedua.utils.CustomEmail
+        android:id="@+id/ed_email_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/email"
+        app:layout_constraintTop_toBottomOf="@+id/ed_name_register" />
+    <com.example.intermediatedua.utils.CustomPassword
+        android:id="@+id/ed_password_register"
+        android:layout_width="match_parent"
+        android:inputType="textPassword"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/password"
+        app:layout_constraintTop_toBottomOf="@+id/ed_email_register"
+        />
+    <com.example.intermediatedua.utils.CustomButton
+        android:id="@+id/btn_register"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:enabled="false"
+        android:layout_marginTop="16dp"
+        android:text="@string/register"
+        app:layout_constraintTop_toBottomOf="@+id/ed_password_register"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
