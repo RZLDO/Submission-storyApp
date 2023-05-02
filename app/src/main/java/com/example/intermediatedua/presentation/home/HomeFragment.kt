@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.intermediatedua.data.home.ListStoryItem
 import com.example.intermediatedua.data.home.StoryResponse
@@ -32,7 +33,7 @@ class HomeFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.fabAdd.setOnClickListener {
-
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddStoryFragment())
         }
 
         homeViewModel.storyResponse.observe(viewLifecycleOwner){

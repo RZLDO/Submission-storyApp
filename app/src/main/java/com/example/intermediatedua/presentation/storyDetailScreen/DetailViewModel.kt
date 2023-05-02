@@ -9,6 +9,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import java.lang.Exception
 import javax.inject.Inject
 @HiltViewModel
+
+
 class DetailViewModel @Inject constructor(private val detailStoryRepository: DetailStoryRepository):ViewModel() {
     sealed class DetailResult<out T : Any>{
         data class Success<out T: Any>(val data : T) : DetailResult<T>()
