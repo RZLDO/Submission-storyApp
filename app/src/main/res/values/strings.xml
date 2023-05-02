@@ -12,4 +12,5 @@
     <string name="register_image">Register image</string>
     <string name="name">name</string>
     <string name="register">register</string>
+    <string name="addbutton">addButton</string>
 </resources>

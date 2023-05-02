@@ -3,6 +3,10 @@ package com.example.intermediatedua.di
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
+import com.example.intermediatedua.data.home.HomeService
+import com.example.intermediatedua.data.local.UserModel
+import com.example.intermediatedua.data.local.UserPreferences.Companion.USER_TOKEN
 import com.example.intermediatedua.data.login.LoginService
 import com.example.intermediatedua.data.register.RegisterService
 import dagger.Module
@@ -22,9 +26,17 @@ object NetworkModule {
     private const val BaseURL = "https://story-api.dicoding.dev/v1/"
     @Provides
     @Singleton
-    fun provideOkHttpClient() :OkHttpClient{
+    fun provideOkHttpClient(sharedPreferences: SharedPreferences) :OkHttpClient{
         return OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .addInterceptor { chain ->
+                val requestBuilder = chain.request().newBuilder()
+                val token = sharedPreferences.getString(USER_TOKEN,"")
+                Log.d("cekTokenInRetrofit", "$token")
+                if (!token.isNullOrEmpty()){
+                    requestBuilder.addHeader("Authorization", "Bearer $token")
+                }
+                chain.proceed(requestBuilder.build())
+            }
             .build()
     }
 
@@ -47,6 +59,11 @@ object NetworkModule {
     @Singleton
     fun provideLoginService(retrofit: Retrofit) : LoginService{
         return retrofit.create(LoginService::class.java)
+    }
+    @Provides
+    @Singleton
+    fun provideHomeService(retrofit: Retrofit) : HomeService{
+        return retrofit.create(HomeService::class.java)
     }
 }
 @Module
