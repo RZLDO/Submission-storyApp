@@ -19,7 +19,7 @@ class HomeViewModel @Inject constructor(private val homeRepository: HomeReposito
     val isLoading : LiveData<Boolean>
         get() = _isLoading
 
-    fun fetchStory(){
+    suspend fun fetchStory(){
         viewModelScope.launch {
             val response = homeRepository.fetchStory()
             _storyResponse.value = response.listStory

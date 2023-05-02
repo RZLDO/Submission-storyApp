@@ -35,7 +35,7 @@ class SplashFragment : Fragment() {
         Handler(Looper.getMainLooper()).postDelayed({
             val user = userPreferences.getUser()
             Log.d("cekUserPreferences ", user.toString())
-            if (user == null ){
+            if (user != null ){
                 findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToHomeFragment())
             }else{
                 findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToLoginFragment())

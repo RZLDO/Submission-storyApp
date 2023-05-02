@@ -13,4 +13,9 @@
     <string name="name">name</string>
     <string name="register">register</string>
     <string name="addbutton">addButton</string>
+    <string name="ini_gambar">Ini Gambar</string>
+    <string name="camera">camera</string>
+    <string name="galery">galery</string>
+    <string name="content_description">Content Description</string>
+    <string name="add_story">Add story</string>
 </resources>

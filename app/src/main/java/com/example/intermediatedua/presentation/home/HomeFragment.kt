@@ -53,10 +53,10 @@ class HomeFragment : Fragment() {
         binding.rvStory.layoutManager = LinearLayoutManager(requireContext())
 
         val adapter = HomeAdapter(it)
-        adapter.setOnItemClickListener {
-//            val toDetailFragment = FragmentHomeDirections.actionFragmentHomeToDetailFragment()
-//            toDetailFragment.id = storyUsers[it].id
-//            view?.findNavController()?.navigate(toDetailFragment)
+        adapter.setOnItemClickListener { position ->
+            val toDetail = HomeFragmentDirections.actionHomeFragmentToDetailFragment()
+            toDetail.id = it[position].id
+            view?.findNavController()?.navigate(toDetail)
         }
         binding.rvStory.adapter = adapter
     }

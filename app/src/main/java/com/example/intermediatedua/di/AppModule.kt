@@ -4,6 +4,8 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import com.example.intermediatedua.data.addStory.AddStoryService
+import com.example.intermediatedua.data.detailStory.DetailStoryService
 import com.example.intermediatedua.data.home.HomeService
 import com.example.intermediatedua.data.local.UserModel
 import com.example.intermediatedua.data.local.UserPreferences.Companion.USER_TOKEN
@@ -64,6 +66,18 @@ object NetworkModule {
     @Singleton
     fun provideHomeService(retrofit: Retrofit) : HomeService{
         return retrofit.create(HomeService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAddStoryService(retrofit: Retrofit) : AddStoryService{
+        return retrofit.create(AddStoryService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDetailStoryService(retrofit: Retrofit) : DetailStoryService{
+        return retrofit.create(DetailStoryService::class.java)
     }
 }
 @Module
