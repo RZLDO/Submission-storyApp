@@ -31,12 +31,13 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
-        lifecycleScope.launch {
-            homeViewModel.fetchStory()
-        }
+
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        lifecycleScope.launch {
+            homeViewModel.fetchStory()
+        }
         binding.fabAdd.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddStoryFragment())
         }
@@ -53,7 +54,12 @@ class HomeFragment : Fragment() {
                     userPreferences.clearUser()
                     findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
                     true
-                }else ->{
+                }
+                R.id.btn_to_maps -> {
+                    findNavController().navigate(R.id.action_homeFragment_to_mapsFragment)
+                    true
+                }
+                else ->{
                     false
                 }
             }

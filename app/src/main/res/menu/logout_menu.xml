@@ -2,11 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/btn_to_maps"
+        android:icon="@drawable/baseline_map_24"
+        app:showAsAction="always"
+        android:title="@string/tomaps"
+        />
+    <item
         android:id="@+id/btn_logout"
         android:icon="@drawable/baseline_logout_24"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:title="@string/logout" />
-    <item
-        android:id="@+id/btn_to_maps"
-        android:icon=""
+
 </menu>
