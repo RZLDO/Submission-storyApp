@@ -1,5 +1,6 @@
 package com.example.intermediatedua.presentation.mapsScreen
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.intermediatedua.data.home.StoryResponse

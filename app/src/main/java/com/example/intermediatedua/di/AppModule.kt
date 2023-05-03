@@ -10,6 +10,7 @@ import com.example.intermediatedua.data.detailStory.DetailStoryService
 import com.example.intermediatedua.data.home.HomeService
 import com.example.intermediatedua.data.local.UserPreferences.Companion.USER_TOKEN
 import com.example.intermediatedua.data.login.LoginService
+import com.example.intermediatedua.data.maps.MapsService
 import com.example.intermediatedua.data.register.RegisterService
 import dagger.Module
 import dagger.Provides
@@ -19,6 +20,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -77,6 +79,12 @@ object NetworkModule {
     @Singleton
     fun provideDetailStoryService(retrofit: Retrofit) : DetailStoryService{
         return retrofit.create(DetailStoryService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMapsService(retrofit: Retrofit) : MapsService{
+        return retrofit.create(MapsService::class.java)
     }
 }
 @Module

@@ -10,11 +10,14 @@ import com.example.intermediatedua.data.home.HomeService
 import com.example.intermediatedua.data.local.UserPreferences
 import com.example.intermediatedua.data.login.LoginRepository
 import com.example.intermediatedua.data.login.LoginService
+import com.example.intermediatedua.data.maps.MapsRepository
+import com.example.intermediatedua.data.maps.MapsService
 import com.example.intermediatedua.data.register.RegisterRepository
 import com.example.intermediatedua.data.register.RegisterService
 import com.example.intermediatedua.presentation.addStoryScreen.AddStoryViewModel
 import com.example.intermediatedua.presentation.home.HomeViewModel
 import com.example.intermediatedua.presentation.loginScreen.LoginViewModel
+import com.example.intermediatedua.presentation.mapsScreen.MapsViewModel
 import com.example.intermediatedua.presentation.registerScreen.RegisterViewModel
 import com.example.intermediatedua.presentation.storyDetailScreen.DetailViewModel
 import dagger.Module
@@ -44,6 +47,10 @@ object RepositoryModule{
     @Provides
     @Singleton
     fun provideAddStoryRepository(addStoryService: AddStoryService) = AddStoryRepository(addStoryService)
+
+    @Provides
+    @Singleton
+    fun provideStoryCoordinatesRepository(mapsService: MapsService) = MapsRepository(mapsService)
 }
 @Module
 @InstallIn(SingletonComponent::class)
@@ -67,6 +74,10 @@ object ViewModelModule{
     @Provides
     @Singleton
     fun provideDetailStoryViewModel(detailStoryRepository: DetailStoryRepository) = DetailViewModel(detailStoryRepository)
+
+    @Provides
+    @Singleton
+    fun provideMapsViewModel(mapsRepository: MapsRepository) = MapsViewModel(mapsRepository)
 }
 
 @Module
