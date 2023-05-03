@@ -32,8 +32,8 @@ class CustomEmail:AppCompatEditText {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 error = when{
-                    p0.isNullOrEmpty() -> "Field ini tidak boleh kosong"
-                    !android.util.Patterns.EMAIL_ADDRESS.matcher(p0).matches() -> "email tidak valid"
+                    p0.isNullOrEmpty() -> "email can't be empty"
+                    !android.util.Patterns.EMAIL_ADDRESS.matcher(p0).matches() -> "not valid email"
                     else->{
                         null
                     }

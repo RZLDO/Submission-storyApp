@@ -13,7 +13,5 @@ interface AddStoryService {
     suspend fun addStory(
         @Part("description")description : RequestBody,
         @Part file : MultipartBody.Part,
-        @Part("lat") lat: RequestBody,
-        @Part("lat") long: RequestBody
     ) : AddStoryResponse
 }

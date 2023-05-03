@@ -3,23 +3,22 @@ package com.example.intermediatedua.di
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.location.LocationManager
 import android.util.Log
 import com.example.intermediatedua.data.addStory.AddStoryService
 import com.example.intermediatedua.data.detailStory.DetailStoryService
 import com.example.intermediatedua.data.home.HomeService
-import com.example.intermediatedua.data.local.UserModel
 import com.example.intermediatedua.data.local.UserPreferences.Companion.USER_TOKEN
 import com.example.intermediatedua.data.login.LoginService
 import com.example.intermediatedua.data.register.RegisterService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Singleton
 
 @Module

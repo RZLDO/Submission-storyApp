@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
             R.id.loginFragment -> finish()
             R.id.registerScreen -> navController.navigate(R.id.action_registerScreen_to_loginFragment)
             R.id.addStoryFragment -> navController.navigate(R.id.action_addStoryFragment_to_homeFragment)
-            else -> onBackPressed()
+            else -> super.onBackPressed()
         }
     }
 }

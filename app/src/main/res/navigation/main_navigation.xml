@@ -32,7 +32,7 @@
         android:id="@+id/registerScreen"
         android:name="com.example.intermediatedua.presentation.registerScreen.RegisterFragment"
         android:label="fragment_register_screen"
-        tools:layout="@layout/fragment_register_screen" >
+        tools:layout="@layout/fragment_register" >
         <action
             android:id="@+id/action_registerScreen_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -48,6 +48,9 @@
         <action
             android:id="@+id/action_homeFragment_to_addStoryFragment"
             app:destination="@id/addStoryFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/addStoryFragment"

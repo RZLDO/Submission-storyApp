@@ -10,17 +10,22 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.intermediatedua.R
 import com.example.intermediatedua.data.home.ListStoryItem
 import com.example.intermediatedua.data.home.StoryResponse
+import com.example.intermediatedua.data.local.UserPreferences
 import com.example.intermediatedua.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
     private var _binding : FragmentHomeBinding? = null
     private val binding : FragmentHomeBinding
         get() = _binding!!
     private val homeViewModel by viewModels<HomeViewModel>()
+    @Inject lateinit var userPreferences: UserPreferences
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,6 +46,17 @@ class HomeFragment : Fragment() {
         }
         homeViewModel.isLoading.observe(viewLifecycleOwner){
             isLoading(it)
+        }
+        binding.homeToolbar.setOnMenuItemClickListener{menuItem->
+            when(menuItem.itemId){
+                R.id.btn_logout -> {
+                    userPreferences.clearUser()
+                    findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
+                    true
+                }else ->{
+                    false
+                }
+            }
         }
         super.onViewCreated(view, savedInstanceState)
     }

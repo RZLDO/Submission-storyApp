@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.intermediatedua.data.addStory.AddStoryRepository
 import com.example.intermediatedua.data.addStory.AddStoryResponse
+import com.example.intermediatedua.presentation.storyDetailScreen.DetailViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
@@ -18,28 +19,24 @@ class AddStoryViewModel @Inject constructor(private val addStoryRepository: AddS
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
-    sealed class AddStoryResult {
-        data class Success(val response: AddStoryResponse) : AddStoryResult()
-        data class Error(val message: String) : AddStoryResult()
+    sealed class AddStoryResult <out T : Any>{
+        data class Success<out T : Any>(val data : T) : AddStoryResult<T>()
+        data class Error(val message: String) : AddStoryResult<Nothing>()
     }
 
-    private val _addStoryResult = MutableLiveData<AddStoryResult>()
-    val addStoryResult: LiveData<AddStoryResult>
-        get() = _addStoryResult
-
-    fun addStory(description: RequestBody, file: MultipartBody.Part, lat: RequestBody, long: RequestBody) {
+    suspend fun addStory(description: RequestBody, file: MultipartBody.Part) : AddStoryResult<AddStoryResponse>{
         _isLoading.value = true
-        viewModelScope.launch {
-            val result = addStoryRepository.addStory(description, file, lat, long)
+        return try {
+            val response = addStoryRepository.addStory(description, file)
             _isLoading.value = false
-            when (result) {
-                is AddStoryRepository.Result.Success -> {
-                    _addStoryResult.value = AddStoryResult.Success(result.data)
-                }
-                is AddStoryRepository.Result.Error -> {
-                    _addStoryResult.value = AddStoryResult.Error(result.message)
-                }
+            when(response) {
+
+                is AddStoryRepository.Result.Success -> AddStoryResult.Success(response.data)
+                is AddStoryRepository.Result.Error -> AddStoryResult.Error(response.message)
             }
+        }catch (e: Exception){
+            _isLoading.value = false
+            AddStoryResult.Error(e.toString())
         }
     }
 }

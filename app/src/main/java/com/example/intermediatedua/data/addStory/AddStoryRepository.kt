@@ -12,17 +12,12 @@ class AddStoryRepository @Inject constructor(private val addStoryService: AddSto
         data class Success<out T : Any>(val data: T) : Result<T>()
         data class Error(val message: String) : Result<Nothing>()
     }
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading : LiveData<Boolean>
-        get() = _isLoading
-    suspend fun addStory(description : RequestBody, file : MultipartBody.Part , lat : RequestBody, long : RequestBody) : Result<AddStoryResponse>{
+
+    suspend fun addStory(description : RequestBody, file : MultipartBody.Part) : Result<AddStoryResponse>{
         return try{
-            _isLoading.value = true
-            val response = addStoryService.addStory(description, file,lat, long)
-            _isLoading.value = false
+            val response = addStoryService.addStory(description, file,)
             Result.Success(response)
         }catch (e: Exception){
-            _isLoading.value = false
             Result.Error(e.toString())
         }
     }

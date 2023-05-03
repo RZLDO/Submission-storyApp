@@ -4,10 +4,12 @@ package com.example.intermediatedua.presentation.loginScreen
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
@@ -34,31 +36,6 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View{
         _binding = FragmentLoginBinding.inflate(inflater,container, false )
-
-        binding.btnLogin.setOnClickListener {
-            val email = binding.edEmail.text.toString()
-            val password = binding.edPassword.text.toString()
-            lifecycleScope.launch {
-                loginViewModel.login(email,password)
-            }
-            loginViewModel.loginResult.observe(viewLifecycleOwner){
-                if (!it.error){
-                    val loginResult = it.loginResult
-                    val userModel = UserModel(
-                        loginResult.userId,
-                        loginResult.name,
-                        loginResult.token
-                    )
-                    userPreferences.saveUser(userModel)
-                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-                }
-            }
-        }
-
-        loginViewModel.isLoading.observe(viewLifecycleOwner){
-            isLoading(it)
-        }
-
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,6 +43,31 @@ class LoginFragment : Fragment() {
         setEnableButton()
         binding.btnToRegister.setOnClickListener{
             findNavController().navigate(R.id.action_loginFragment_to_registerScreen)
+        }
+
+        binding.btnLogin.setOnClickListener {
+            val email = binding.edEmail.text.toString()
+            val password = binding.edPassword.text.toString()
+            lifecycleScope.launch {
+                when (val result = loginViewModel.login(email,password)) {
+                    is LoginViewModel.LoginResult.Success -> {
+                        val userModel = UserModel(
+                            result.data.loginResult.userId,
+                            result.data.loginResult.name,
+                            result.data.loginResult.token
+                        )
+                        userPreferences.saveUser(userModel)
+                        findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+                    }
+                    is LoginViewModel.LoginResult.Error -> {
+                        Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            loginViewModel.isLoading.observe(viewLifecycleOwner){
+                Log.d("CEK LOADING ", it.toString())
+                isLoading(it)
+            }
         }
 
     }
@@ -111,6 +113,7 @@ class LoginFragment : Fragment() {
     }
     private fun isLoading(isLoading : Boolean ){
         binding.pbLogin.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.btnLogin.isEnabled = !isLoading
     }
     override fun onDestroy() {
         _binding = null
