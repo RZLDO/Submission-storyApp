@@ -5,8 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.intermediatedua.data.home.StoryResponse
 import com.example.intermediatedua.data.maps.MapsRepository
-
-class MapsViewModel(private val mapsRepository: MapsRepository): ViewModel() {
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+@HiltViewModel
+class MapsViewModel @Inject constructor(private val mapsRepository: MapsRepository): ViewModel() {
     sealed class MapsResult<out T: Any>{
         data class Success<out T : Any>(val data : T) : MapsResult<T>()
         data class Error(val message : String ): MapsResult<Nothing>()
