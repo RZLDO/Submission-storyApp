@@ -2,7 +2,10 @@ package com.example.intermediatedua.data.detailStory
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import com.example.intermediatedua.data.addStory.AddStoryResponse
+import com.example.intermediatedua.data.home.StoryResponse
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -13,7 +16,7 @@ class DetailStoryRepository @Inject constructor(private val detailStoryService: 
     }
 
 
-    suspend fun detailResult(id: String ) : DetailResult<DetailStoryResponse>{
+    suspend fun detailResult(id: String ) :  DetailResult<DetailStoryResponse>{
         return try {
             val result = detailStoryService.storyDetail(id)
             DetailResult.Success(result)

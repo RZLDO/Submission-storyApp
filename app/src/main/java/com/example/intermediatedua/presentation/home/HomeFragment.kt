@@ -6,17 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.intermediatedua.R
-import com.example.intermediatedua.data.home.ListStoryItem
-import com.example.intermediatedua.data.home.StoryResponse
 import com.example.intermediatedua.data.local.UserPreferences
+import com.example.intermediatedua.data.local.room.StoryResponseItems
 import com.example.intermediatedua.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -35,19 +32,7 @@ class HomeFragment : Fragment() {
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        lifecycleScope.launch {
-            homeViewModel.fetchStory()
-        }
-        binding.fabAdd.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddStoryFragment())
-        }
 
-        homeViewModel.storyResponse.observe(viewLifecycleOwner){
-            setStory(it)
-        }
-        homeViewModel.isLoading.observe(viewLifecycleOwner){
-            isLoading(it)
-        }
         binding.homeToolbar.setOnMenuItemClickListener{menuItem->
             when(menuItem.itemId){
                 R.id.btn_logout -> {
@@ -65,23 +50,30 @@ class HomeFragment : Fragment() {
             }
         }
         super.onViewCreated(view, savedInstanceState)
+        setStory()
     }
+
 
     private fun isLoading(it: Boolean) {
         binding.pbHome.visibility = if (it) View.VISIBLE else View.GONE
     }
 
-    private fun setStory(it: List<ListStoryItem>) {
+    private fun setStory() {
         binding.rvStory.setHasFixedSize(true)
         binding.rvStory.layoutManager = LinearLayoutManager(requireContext())
 
-        val adapter = HomeAdapter(it)
-        adapter.setOnItemClickListener { position ->
-            val toDetail = HomeFragmentDirections.actionHomeFragmentToDetailFragment()
-            toDetail.id = it[position].id
-            view?.findNavController()?.navigate(toDetail)
-        }
+        val adapter = HomeAdapter()
         binding.rvStory.adapter = adapter
+        homeViewModel.story.observe(viewLifecycleOwner) {
+            adapter.submitData(lifecycle, it)
+        }
+        adapter.setOnItemClickListener(object : HomeAdapter.OnItemClickListener{
+            override fun onItemClick(story: StoryResponseItems?) {
+                val toDetail = HomeFragmentDirections.actionHomeFragmentToDetailFragment()
+                toDetail.id = story!!.id
+                view?.findNavController()?.navigate(toDetail)
+            }
+        })
     }
 
 

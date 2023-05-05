@@ -5,10 +5,12 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.location.LocationManager
 import android.util.Log
+import androidx.room.Room
 import com.example.intermediatedua.data.addStory.AddStoryService
 import com.example.intermediatedua.data.detailStory.DetailStoryService
 import com.example.intermediatedua.data.home.HomeService
 import com.example.intermediatedua.data.local.UserPreferences.Companion.USER_TOKEN
+import com.example.intermediatedua.data.local.room.StoryDatabase
 import com.example.intermediatedua.data.login.LoginService
 import com.example.intermediatedua.data.maps.MapsService
 import com.example.intermediatedua.data.register.RegisterService
@@ -94,5 +96,14 @@ object LocalModule{
     @Provides
     fun provideSharedPreferences(application: Application): SharedPreferences {
         return application.getSharedPreferences("userPreferences", Context.MODE_PRIVATE)
+    }
+    @Singleton
+    @Provides
+    fun provideStoryDatabase(application: Application): StoryDatabase {
+        return Room.databaseBuilder(
+            application.applicationContext,
+            StoryDatabase::class.java,
+            "story_database"
+        ).build()
     }
 }

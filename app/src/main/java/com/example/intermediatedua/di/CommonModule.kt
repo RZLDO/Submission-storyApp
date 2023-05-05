@@ -8,6 +8,7 @@ import com.example.intermediatedua.data.detailStory.DetailStoryService
 import com.example.intermediatedua.data.home.HomeRepository
 import com.example.intermediatedua.data.home.HomeService
 import com.example.intermediatedua.data.local.UserPreferences
+import com.example.intermediatedua.data.local.room.StoryDatabase
 import com.example.intermediatedua.data.login.LoginRepository
 import com.example.intermediatedua.data.login.LoginService
 import com.example.intermediatedua.data.maps.MapsRepository
@@ -38,7 +39,7 @@ object RepositoryModule{
 
     @Provides
     @Singleton
-    fun provideHomeRepository(homeService: HomeService) = HomeRepository(homeService)
+    fun provideHomeRepository(storyDatabase: StoryDatabase,homeService: HomeService) = HomeRepository(storyDatabase,homeService)
 
     @Provides
     @Singleton
