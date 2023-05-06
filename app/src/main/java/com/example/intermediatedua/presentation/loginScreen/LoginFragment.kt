@@ -115,6 +115,7 @@ class LoginFragment : Fragment() {
         binding.pbLogin.visibility = if (isLoading) View.VISIBLE else View.GONE
         binding.btnLogin.isEnabled = !isLoading
     }
+
     override fun onDestroy() {
         _binding = null
         super.onDestroy()

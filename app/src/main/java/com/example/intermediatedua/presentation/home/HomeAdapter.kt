@@ -5,13 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.intermediatedua.R
-import com.example.intermediatedua.data.home.ListStoryItem
 import com.example.intermediatedua.data.local.room.StoryResponseItems
 
 class HomeAdapter: PagingDataAdapter<StoryResponseItems, HomeAdapter.ViewModel>(DIFF_CALLBACK){
@@ -52,7 +50,7 @@ class HomeAdapter: PagingDataAdapter<StoryResponseItems, HomeAdapter.ViewModel>(
         fun onItemClick(story: StoryResponseItems?)
     }
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<StoryResponseItems>() {
+         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<StoryResponseItems>() {
             override fun areItemsTheSame(oldItem: StoryResponseItems, newItem: StoryResponseItems): Boolean {
                 return oldItem == newItem
             }
